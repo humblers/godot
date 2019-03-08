@@ -57,3 +57,20 @@ void FirebaseAuth::request_facebook_access_token() {
 	dict["error_message"] = "firebase cpp sdk doesn't support this feature for desktop.";
 	call_deferred("emit_signal", "on_request_facebook_access_token_complete", dict);
 }
+
+void FirebaseAuth::sign_in_with_email_and_password(const String &email, const String &password) {
+	wait_for_future_user(auth->SignInWithEmailAndPassword(email.utf8().get_data(), password.utf8().get_data()), "on_sign_in_complete");
+}
+
+void FirebaseAuth::link_with_email_and_password(const String &email, const String &password) {
+	if (!has_user()) {
+		Dictionary dict;
+		dict["auth_error"] = kAuthErrorUserNotFound;
+		dict["error_message"] = "sign in first";
+		call_deferred("emit_signal", "on_link_complete", dict);
+		return;
+	}
+	Credential credential = EmailAuthProvider::GetCredential(email.utf8().get_data(), password.utf8().get_data());
+	User *current_user = auth->current_user();
+	wait_for_future_user(current_user->LinkWithCredential(credential), "on_link_complete");
+}

@@ -80,11 +80,13 @@ public:
 	void sign_in_with_custom_token(const String &custom_token);
 	void sign_in_with_google_id_token(const String &google_id_token);
 	void sign_in_with_facebook_access_token(const String &facebook_access_token);
+	void sign_in_with_email_and_password(const String &email, const String &password);
 	void sign_out();
 	void request_google_id_token();
-	void link_with_google_id_token(const String &google_id_token);
 	void request_facebook_access_token();
+	void link_with_google_id_token(const String &google_id_token);
 	void link_with_facebook_access_token(const String &facebook_access_token);
+	void link_with_email_and_password(const String &email, const String &password);
 
 	FirebaseAuth();
 	~FirebaseAuth();

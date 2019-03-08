@@ -69,3 +69,17 @@ void FirebaseAuth::request_google_id_token() {
 void FirebaseAuth::request_facebook_access_token() {
 	java_singleton->call("requestFacebookAccessToken", this->get_instance_id());
 }
+
+void FirebaseAuth::sign_in_with_email_and_password(const String &email, const String &password) {
+	Dictionary dict;
+	dict["auth_error"] = kAuthErrorUnimplemented;
+	dict["error_message"] = "firebase sdk wrapper doesn't support this feature for android.";
+	call_deferred("emit_signal", "on_sign_in_complete", dict);
+}
+
+void FirebaseAuth::link_with_email_and_password(const String &email, const String &password) {
+	Dictionary dict;
+	dict["auth_error"] = kAuthErrorUnimplemented;
+	dict["error_message"] = "firebase sdk wrapper doesn't support this feature for android.";
+	call_deferred("emit_signal", "on_link_complete", dict);
+}
