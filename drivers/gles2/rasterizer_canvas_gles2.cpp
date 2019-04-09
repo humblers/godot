@@ -185,11 +185,13 @@ void RasterizerCanvasGLES2::canvas_end() {
 	state.using_transparent_rt = false;
 }
 
-RasterizerStorageGLES2::Texture *RasterizerCanvasGLES2::_bind_canvas_texture(const RID &p_texture, const RID &p_normal_map) {
+RasterizerStorageGLES2::Texture *RasterizerCanvasGLES2::_bind_canvas_texture(const RID &p_texture, const RID &p_normal_map, bool p_force) {
 
 	RasterizerStorageGLES2::Texture *tex_return = NULL;
 
-	if (p_texture.is_valid()) {
+	if (p_texture == state.current_tex && !p_force) {
+		tex_return = state.current_tex_ptr;
+	} else if (p_texture.is_valid()) {
 
 		RasterizerStorageGLES2::Texture *texture = storage->texture_owner.getornull(p_texture);
 
@@ -228,7 +230,7 @@ RasterizerStorageGLES2::Texture *RasterizerCanvasGLES2::_bind_canvas_texture(con
 		glBindTexture(GL_TEXTURE_2D, storage->resources.white_tex);
 	}
 
-	if (p_normal_map == state.current_normal) {
+	if (p_normal_map == state.current_normal && !p_force) {
 		//do none
 		state.canvas_shader.set_uniform(CanvasShaderGLES2::USE_DEFAULT_NORMAL, state.current_normal.is_valid());
 
@@ -1251,7 +1253,7 @@ void RasterizerCanvasGLES2::_copy_texscreen(const Rect2 &p_rect) {
 	// back to canvas, force rebind
 	state.using_texture_rect = false;
 	state.canvas_shader.bind();
-	_bind_canvas_texture(state.current_tex, state.current_normal);
+	_bind_canvas_texture(state.current_tex, state.current_normal, true);
 	_set_uniforms();
 }
 
