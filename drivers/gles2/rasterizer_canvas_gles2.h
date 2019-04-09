@@ -129,7 +129,7 @@ public:
 
 	virtual void reset_canvas();
 
-	RasterizerStorageGLES2::Texture *_bind_canvas_texture(const RID &p_texture, const RID &p_normal_map);
+	RasterizerStorageGLES2::Texture *_bind_canvas_texture(const RID &p_texture, const RID &p_normal_map, bool p_force = false);
 
 	void _bind_quad_buffer();
 	void draw_generic_textured_rect(const Rect2 &p_rect, const Rect2 &p_src);
