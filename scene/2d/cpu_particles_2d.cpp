@@ -144,21 +144,41 @@ CPUParticles2D::DrawOrder CPUParticles2D::get_draw_order() const {
 void CPUParticles2D::_update_mesh_texture() {
 
 	Size2 tex_size;
+	Vector2 offset;
+	Vector2 uv_0(0, 0);
+	Vector2 uv_1(1, 0);
+	Vector2 uv_2(1, 1);
+	Vector2 uv_3(0, 1);
 	if (texture.is_valid()) {
-		tex_size = texture->get_size();
+		Ref<AtlasTexture> atlas_tex = texture;
+		if (atlas_tex != NULL) {
+			Rect2 region = atlas_tex->get_region();
+			Rect2 margin = atlas_tex->get_margin();
+			Vector2 center = atlas_tex->get_size()/2;
+			Vector2 tex_center = margin.position + region.size/2;
+			Vector2 atlas_size = atlas_tex->get_atlas()->get_size();
+			offset = tex_center - center;
+			uv_0 = region.position / atlas_size;
+			uv_1 = (region.position + Vector2(region.size.x, 0))/ atlas_size;
+			uv_2 = (region.position + region.size)/ atlas_size;
+			uv_3 = (region.position + Vector2(0, region.size.y))/ atlas_size;
+			tex_size = region.size;
+		} else {
+			tex_size = texture->get_size();
+		}
 	} else {
 		tex_size = Size2(1, 1);
 	}
 	PoolVector<Vector2> vertices;
-	vertices.push_back(-tex_size * 0.5);
-	vertices.push_back(-tex_size * 0.5 + Vector2(tex_size.x, 0));
-	vertices.push_back(-tex_size * 0.5 + Vector2(tex_size.x, tex_size.y));
-	vertices.push_back(-tex_size * 0.5 + Vector2(0, tex_size.y));
+	vertices.push_back(offset + -tex_size * 0.5);
+	vertices.push_back(offset + -tex_size * 0.5 + Vector2(tex_size.x, 0));
+	vertices.push_back(offset + -tex_size * 0.5 + Vector2(tex_size.x, tex_size.y));
+	vertices.push_back(offset + -tex_size * 0.5 + Vector2(0, tex_size.y));
 	PoolVector<Vector2> uvs;
-	uvs.push_back(Vector2(0, 0));
-	uvs.push_back(Vector2(1, 0));
-	uvs.push_back(Vector2(1, 1));
-	uvs.push_back(Vector2(0, 1));
+	uvs.push_back(uv_0);
+	uvs.push_back(uv_1);
+	uvs.push_back(uv_2);
+	uvs.push_back(uv_3);
 	PoolVector<Color> colors;
 	colors.push_back(Color(1, 1, 1, 1));
 	colors.push_back(Color(1, 1, 1, 1));
