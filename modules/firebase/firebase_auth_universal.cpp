@@ -149,11 +149,15 @@ void FirebaseAuth::_bind_methods() {
 	ClassDB::bind_method(D_METHOD("sign_in_with_google_id_token", "google_id_token"), &FirebaseAuth::sign_in_with_google_id_token, DEFVAL(""));
 	ClassDB::bind_method(D_METHOD("sign_in_with_facebook_access_token", "facebook_access_token"),
 			&FirebaseAuth::sign_in_with_facebook_access_token, DEFVAL(""));
+	ClassDB::bind_method(D_METHOD("sign_in_with_email_and_password", "email", "password"),
+			&FirebaseAuth::sign_in_with_email_and_password, DEFVAL(""), DEFVAL(""));
 	ClassDB::bind_method(D_METHOD("sign_out"), &FirebaseAuth::sign_out);
 	ClassDB::bind_method(D_METHOD("request_google_id_token"), &FirebaseAuth::request_google_id_token);
 	ClassDB::bind_method(D_METHOD("link_with_google_id_token", "google_id_token"), &FirebaseAuth::link_with_google_id_token, DEFVAL(""));
 	ClassDB::bind_method(D_METHOD("request_facebook_access_token"), &FirebaseAuth::request_facebook_access_token);
 	ClassDB::bind_method(D_METHOD("link_with_facebook_access_token", "facebook_access_token"), &FirebaseAuth::link_with_facebook_access_token, DEFVAL(""));
+	ClassDB::bind_method(D_METHOD("link_with_email_and_password", "email", "password"),
+			&FirebaseAuth::link_with_email_and_password, DEFVAL(""), DEFVAL(""));
 
 	ADD_SIGNAL(MethodInfo("on_retrieve_token_complete", PropertyInfo(Variant::DICTIONARY, "dict")));
 	ADD_SIGNAL(MethodInfo("on_sign_in_complete", PropertyInfo(Variant::DICTIONARY, "dict")));
