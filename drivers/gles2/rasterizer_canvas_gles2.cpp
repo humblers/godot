@@ -1372,7 +1372,7 @@ void RasterizerCanvasGLES2::canvas_render_items(Item *p_item_list, int p_z, cons
 					}
 				}
 
-				if (shader_ptr != shader_cache) {
+				if (shader_ptr != shader_cache || rebind_shader) {
 
 					if (shader_ptr->canvas_item.uses_time) {
 						VisualServerRaster::redraw_request();
@@ -1509,8 +1509,6 @@ void RasterizerCanvasGLES2::canvas_render_items(Item *p_item_list, int p_z, cons
 
 		if (unshaded || (state.uniforms.final_modulate.a > 0.001 && (!shader_cache || shader_cache->canvas_item.light_mode != RasterizerStorageGLES2::Shader::CanvasItem::LIGHT_MODE_LIGHT_ONLY) && !ci->light_masked))
 			_canvas_item_render_commands(p_item_list, NULL, reclip, material_ptr);
-
-		rebind_shader = true; // hacked in for now.
 
 		if ((blend_mode == RasterizerStorageGLES2::Shader::CanvasItem::BLEND_MODE_MIX || blend_mode == RasterizerStorageGLES2::Shader::CanvasItem::BLEND_MODE_PMALPHA) && p_light && !unshaded) {
 
