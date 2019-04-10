@@ -240,8 +240,6 @@ RasterizerStorageGLES2::Texture *RasterizerCanvasGLES2::_bind_canvas_texture(con
 
 		if (!normal_map) {
 			state.current_normal = RID();
-			glActiveTexture(GL_TEXTURE0 + storage->config.max_texture_image_units - 2);
-			glBindTexture(GL_TEXTURE_2D, storage->resources.normal_tex);
 			state.canvas_shader.set_uniform(CanvasShaderGLES2::USE_DEFAULT_NORMAL, false);
 
 		} else {
@@ -261,8 +259,6 @@ RasterizerStorageGLES2::Texture *RasterizerCanvasGLES2::_bind_canvas_texture(con
 	} else {
 
 		state.current_normal = RID();
-		glActiveTexture(GL_TEXTURE0 + storage->config.max_texture_image_units - 2);
-		glBindTexture(GL_TEXTURE_2D, storage->resources.normal_tex);
 		state.canvas_shader.set_uniform(CanvasShaderGLES2::USE_DEFAULT_NORMAL, false);
 	}
 
