@@ -486,6 +486,7 @@ public:
 	void set_physics_object_picking(bool p_enable);
 	bool get_physics_object_picking();
 
+	void gui_release_mouse_focus();
 	bool gui_has_modal_stack() const;
 
 	Variant gui_get_drag_data() const;
