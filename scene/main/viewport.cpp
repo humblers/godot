@@ -2762,6 +2762,21 @@ Vector2 Viewport::get_camera_rect_size() const {
 	return size;
 }
 
+void Viewport::gui_release_mouse_focus() {
+	if (gui.mouse_focus) {
+		Node *f = gui.mouse_focus;
+		f->notification(Control::NOTIFICATION_FOCUS_EXIT, true);
+		BaseButton *bb = Object::cast_to<BaseButton>(f);
+		if (bb && !bb->is_disabled()) {
+			bb->set_disabled(true);
+			bb->set_disabled(false);
+		}
+		gui.mouse_focus_mask = 0;
+		gui.mouse_focus = NULL;
+		gui.last_mouse_focus = NULL;
+	}
+}
+
 bool Viewport::gui_has_modal_stack() const {
 
 	return gui.modal_stack.size();
@@ -3007,6 +3022,7 @@ void Viewport::_bind_methods() {
 	ClassDB::bind_method(D_METHOD("get_mouse_position"), &Viewport::get_mouse_position);
 	ClassDB::bind_method(D_METHOD("warp_mouse", "to_position"), &Viewport::warp_mouse);
 
+	ClassDB::bind_method(D_METHOD("gui_release_mouse_focus"), &Viewport::gui_release_mouse_focus);
 	ClassDB::bind_method(D_METHOD("gui_has_modal_stack"), &Viewport::gui_has_modal_stack);
 	ClassDB::bind_method(D_METHOD("gui_get_drag_data"), &Viewport::gui_get_drag_data);
 	ClassDB::bind_method(D_METHOD("gui_is_dragging"), &Viewport::gui_is_dragging);
