@@ -138,10 +138,14 @@ void main() {
 	outvec.xy = dst_rect.xy + abs(dst_rect.zw) * select(vertex, vec2(1.0, 1.0) - vertex, lessThan(src_rect.zw, vec2(0.0, 0.0)));
 
 	// outvec.xy = dst_rect.xy + abs(dst_rect.zw) * vertex;
+	bool flip_x = src_rect.z < 0;
+	bool flip_y = src_rect.w < 0;
 #else
 	vec4 outvec = vec4(vertex.xy, 0.0, 1.0);
 
 	uv = uv_attrib;
+	bool flip_x = false;
+	bool flip_y = false;
 #endif
 
 	{
