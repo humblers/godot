@@ -1323,7 +1323,7 @@ void ScriptEditorDebugger::_profiler_activate(bool p_enable) {
 		Array msg;
 		msg.push_back("start_profiling");
 		int max_funcs = EditorSettings::get_singleton()->get("debugger/profiler_frame_max_functions");
-		max_funcs = CLAMP(max_funcs, 16, 512);
+		max_funcs = CLAMP(max_funcs, 16, 1024);
 		msg.push_back(max_funcs);
 		ppeer->put_var(msg);
 		print_verbose("Starting profiling.");

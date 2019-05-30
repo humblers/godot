@@ -27,4 +27,5 @@ module_webm_enabled=no \
 module_websocket_enabled=no \
 module_upnp_enabled=false \
 module_visual_script_enabled=false \
-use_lto=yes 
+use_lto=yes \
+-j4
